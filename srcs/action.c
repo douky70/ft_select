@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/14 11:01:49 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/16 12:02:07 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,12 @@ void	cur_down(void)
 	buff = tgetstr("do", NULL);
 	if (buff)
 		tputs(buff, 1, &ft_putchar);
+}
+
+void	cur_mov(int y, int x)
+{
+	char *buff;
+
+	buff = tgetstr("cm", NULL);
+	tputs(tgoto(buff, x, y), 1, &ft_putchar);
 }

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/14 10:31:29 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/16 12:34:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ t_opt	*create_data_struc(int argc, char **argv)
 	int		i;
 
 	i = 0;
-	if (!(list = malloc(sizeof(t_opt) * (argc))))
+	if (!(list = malloc(sizeof(t_opt) * argc)))
 		exit(-1);
+	ft_bzero(list, sizeof(t_opt) * argc);
 	while (i < argc)
 	{
 		list[i].word = argv[i];
@@ -64,7 +65,6 @@ t_opt	*create_data_struc(int argc, char **argv)
 		++i;
 	}
 	list[0].cursor = 1;
-	ft_bzero(&(list[i]), sizeof(t_opt));
 	return (list);
 }
 
@@ -84,17 +84,55 @@ int		is_arrow(char *buff)
 	return (0);
 }
 
+int		get_max(int ligne, int i, t_opt *opt)
+{
+	int	start;
+	int	j;
+	int	max;
+	int	len;
+
+	max = 0;
+	j = 0;
+	start = (i - (i % ligne));
+	while (opt[start + j].word && j < 3)
+	{
+		if (max < (len = ft_strlen(opt[start + j].word)))
+			max = len;
+		j++;
+	}
+	return (max);
+}
+
+int		get_col_opt(t_opt *opt, int ligne, int pos)
+{
+	int res;
+	int	i;
+
+	res = 0;
+	i = 0;
+	while (i < pos && opt[i].word)
+	{
+		if ((i % ligne) == (pos % ligne))
+		{
+			res += get_max(ligne, i, opt) + 1;
+		}
+		++i;
+	}
+	return (res);
+}
+
 void	draw_list(t_opt *opt)
 {
-	int col;
+	int 	ligne;
+	int		i;
 
-	col = tgetnum("li");
-	while (opt->word)
+	i = 0;
+	ligne = tgetnum("li");
+	while (opt[i].word)
 	{
-		ft_putstr(opt->word);
-		if ((opt + 1)->word)
-			ft_putchar('\n');
-		++opt;
+		cur_mov(i % ligne, get_col_opt(opt, ligne, i));
+		ft_putstr(opt[i].word);
+		++i;
 	}
 }
 

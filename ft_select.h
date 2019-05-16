@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/14 10:41:06 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/16 06:56:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ void	cur_right(void);
 void	cur_left(void);
 void	cur_up(void);
 void	cur_down(void);
-
+void	cur_mov(int x, int y);
 #endif
