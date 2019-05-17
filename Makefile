@@ -8,7 +8,7 @@ LIB_FOLDERS		=	-L$(LIBFT_FOLDER)
 LIBS			=	-lft
 # Compilation
 CXX				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -O3
+CFLAGS			=	#-Wall -Wextra -Werror -O3 ##############################################################
 INCLUDES		=	-I includes -I $(LIBFT_FOLDER)/includes
 
 # Linking
@@ -23,12 +23,12 @@ all: libft $(NAME)
 $(NAME): $(OBJ)
 	@printf "$(GREEN)[cc]$(RESET): done\n"
 	@printf "$(GREEN)[ld]$(RESET): $(NAME)\n"
-	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES)
+	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES) -g
 
 .c.o: $(SRC)
 	@printf "$(GREEN)[cc]$(RESET): $< -> $@\n"
 	@printf "\e[1A"
-	@gcc -c $< -o $@ $(INCLUDES) $(CFLAGS)
+	@gcc -c $< -o $@ $(INCLUDES) $(CFLAGS) -g
 	@printf "\e[0K"
 
 run: all

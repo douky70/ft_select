@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:06:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/14 10:40:49 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/17 23:30:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,6 @@ void	term_change_clean(void)
 	char *buff;
 
 	buff = tgetstr("me", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
-}
-
-void	term_put(char *code)
-{
-	char *buff;
-
-	buff = tgetstr(code, NULL);
 	if (buff)
 		tputs(buff, 1, &ft_putchar);
 }

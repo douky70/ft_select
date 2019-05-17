@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/16 06:56:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/17 23:29:43 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_opt
 	char			*word;
 	unsigned int	len;
 	char			selected;
-	char			cursor;
 }				t_opt;
 
 
@@ -34,12 +33,10 @@ void	term_home(void);
 void	term_glow(void);
 void	term_put(char *code);
 void	term_change_clean(void);
-void	select_one(t_opt *opt);
-void	move_cur(t_opt *opt, int direction);
+void	select_one(t_opt *opt, int cur);
 
-void	cur_right(void);
-void	cur_left(void);
-void	cur_up(void);
-void	cur_down(void);
-void	cur_mov(int x, int y);
+int		move_pointer(int pos, t_opt *opt, int dir);
+int		get_col_opt(t_opt *opt, int ligne, int pos);
+
+void	cur_mov(int y, int x);
 #endif

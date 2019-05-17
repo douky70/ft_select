@@ -4,6 +4,40 @@
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
+		{ 
+			"name": "(gdb) FEDORA ATTACH",
+			"type": "cppdbg",
+			"request": "attach",
+			"program": "${workspaceFolder}/a.out",
+			"processId": "${command:pickProcess}",
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		},
+		{
+			"name": "(gdb) FEDORA",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/a.out",
+			"args": ["Makefile", "a.out", "a.out.dSYM", "ft_select.h", "libft", "srcs", "test.c"],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"environment": [],
+			"externalConsole": true,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		},
 
 		{
 			"name": "(lldb) Launch",

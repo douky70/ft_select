@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/16 12:34:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/17 23:35:25 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ t_opt	*create_data_struc(int argc, char **argv)
 		list[i].word = argv[i];
 		list[i].len = ft_strlen(argv[i]);
 		list[i].selected = 0;
-		list[i].cursor = 0;
 		++i;
 	}
-	list[0].cursor = 1;
 	return (list);
 }
 
@@ -141,6 +139,7 @@ int		main(int argc, char **argv)
 	t_opt	*opt;
 	char	buff[4] = {0};
 	int		res;
+	int		pos = 0;
 
 	if ((ft_err(init_term())))
 	{
@@ -152,12 +151,10 @@ int		main(int argc, char **argv)
 		{
 			read(STDIN_FILENO, buff, 3);
 			res = is_arrow(buff);
-			if (res == KEY_UP)
-				move_cur(opt, KEY_UP);
-			else if (res == KEY_DOWN)
-				move_cur(opt, KEY_DOWN);
+			if (res != 0)
+				pos = move_pointer(pos, opt, res);
 			if (buff[0] == ' ')
-				select_one(opt);
+				select_one(opt, pos);
 			ft_bzero(buff, sizeof(char) * 3);
 		}
 	}

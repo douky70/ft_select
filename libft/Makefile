@@ -43,7 +43,7 @@ MAKELIB = ft_abs.c ft_atoi.c ft_bzero.c ft_isalnum.c \
 OBJ = $(MAKELIB:.c=.o)
 
 INCLUDES	=	./includes
-FLAGS		=	-Wall -Wextra -Werror -O3 -Ofast -std=c99
+FLAGS		=	-O3 -Ofast -std=c99 #-Wall -Wextra -Werror 
 
 # Colors
 GREEN		=	\033[32m

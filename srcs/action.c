@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/16 12:02:07 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/17 23:30:28 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,95 +14,32 @@
 #include "ft_select.h"
 #include "libft.h"
 
-void	move_cur(t_opt *opt, int direction)
-{
-	int		len;
-	int		i;
-
-	len = 0;
-	while (opt[len].word)
-		++len;
-	i = 0;
-	while (i < len)
-	{
-		if (opt[i].cursor == 1)
-		{
-			if (direction == 1 && i > 0)
-			{
-				cur_up();
-				opt[i].cursor = 0;
-				opt[i - 1].cursor = 1;
-			}
-			else if (direction == 2 && i < len - 1)
-			{
-				cur_down();
-				opt[i].cursor = 0;
-				opt[i + 1].cursor = 1;
-			}
-			break ;
-		}
-		++i;
-	}
-}
-
-void	select_one(t_opt *opt)
+void	select_one(t_opt *opt, int pos)
 {
 	int	cur;
+	int	ligne;
 
-	cur = 0;
-	while (opt[cur].word)
-	{
-		if (opt[cur].cursor == 1)
-			break;
-		++cur;
-	}
-	if (opt[cur].selected == 0)
+	if (opt[pos].selected == 0)
 	{
 			term_glow();
-			opt[cur].selected = 1;
+			opt[pos].selected = 1;
 	}
 	else
-		opt[cur].selected = 0;
-	ft_putstr(opt[cur].word);
-	for (int j = 0; j < ft_strlen(opt[cur].word) + 1; ++j)
-		cur_left();
+		opt[pos].selected = 0;
+	ft_putstr(opt[pos].word);
+	ligne = tgetnum("li");
+	cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
 	term_change_clean();
 }
 
-void	cur_right(void)
+int		opt_len(t_opt *opt)
 {
-	char *buff;
+	int	res;
 
-	buff = tgetstr("ri", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
-}
-
-void	cur_left(void)
-{
-	char *buff;
-
-	buff = tgetstr("le", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
-}
-
-void	cur_up(void)
-{
-	char *buff;
-
-	buff = tgetstr("up", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
-}
-
-void	cur_down(void)
-{
-	char *buff;
-
-	buff = tgetstr("do", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
+	res = 0;
+	while (opt[res].word)
+		++res;
+	return (res);
 }
 
 void	cur_mov(int y, int x)
@@ -111,4 +48,67 @@ void	cur_mov(int y, int x)
 
 	buff = tgetstr("cm", NULL);
 	tputs(tgoto(buff, x, y), 1, &ft_putchar);
+}
+
+int		move_pointer(int pos, t_opt *opt, int dir)
+{
+	int ligne = tgetnum("li");
+	int	optlen = opt_len(opt) - 1;
+	
+	if (dir == KEY_UP)
+	{
+		if (pos > 0)
+			--pos;
+		else
+			pos = optlen;
+		cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+	}
+	if (dir == KEY_DOWN)
+	{
+		if (pos < optlen)
+			++pos;
+		else
+			pos = 0;
+		cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+		
+	}
+	if (dir == KEY_RIGHT)
+	{
+			if (pos > optlen - ligne)
+			{
+				if ((pos + 1) % ligne == 0)
+					pos = 0;
+				else
+					pos = pos % ligne + 1;
+			}
+			else
+				pos += ligne;
+			cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+	}
+	if (dir == KEY_LEFT)
+	{
+		if (pos < ligne)
+		{
+			if (pos == 0)
+			{
+				int tmp = ligne - 1;
+				while (tmp + ligne <= optlen)
+					tmp += ligne;
+				pos = tmp;
+			}
+			else
+			{
+				int tmp = pos % ligne - 1;
+				while (tmp + ligne <= optlen)
+					tmp += ligne;
+				pos = tmp;
+			}
+		}
+		else
+			pos -= ligne;
+		
+		cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+		
+	}
+	return (pos);
 }
