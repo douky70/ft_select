@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:18:18 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/18 21:18:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/19 21:53:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ void	term_glow(void)
 	char *buff;
 
 	buff = tgetstr("mr", NULL);
+	if (buff)
+		tputs(buff, 1, &ft_putchar);
+}
+
+void	term_underline(void)
+{
+	char *buff;
+
+	buff = tgetstr("us", NULL);
 	if (buff)
 		tputs(buff, 1, &ft_putchar);
 }

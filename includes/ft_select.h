@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/19 17:21:24 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/19 22:43:32 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int		get_col_opt(t_opt *opt, int ligne, int pos);
 */
 
 void	cur_mov(int y, int x);
+void	move_to_opt(t_opt *opt, int pos);
+void	underline_one(t_opt *opt, int pos);
 
 /*
 **	termcapfonc.c
@@ -47,6 +49,7 @@ void	cur_mov(int y, int x);
 void	term_clear(void);
 void	term_home(void);
 void	term_glow(void);
+void	term_underline(void);
 void	term_change_clean(void);
 
 /*

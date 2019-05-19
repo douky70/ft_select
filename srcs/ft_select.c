@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/19 17:22:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/19 23:00:13 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int		init_term(void)
 	int		ret;
 	char	*term;
 	struct	termios s_termios;
-
+	char	*buff;
+	
 	term = getenv("TERM");
 	if (term == NULL)
 		return (0);
@@ -36,6 +37,9 @@ int		init_term(void)
     s_termios.c_lflag &= ~(ECHO); /* Les touches tapées au clavier ne s'affficheront plus dans le terminal */
 	if (tcsetattr(STDIN_FILENO, 0, &s_termios) == -1)
         return (-4 - TERM_INIT);
+	buff = tgetstr("vi", NULL);
+	if (buff)
+		tputs(buff, 1, &ft_putchar);
 	return (1);
 }
 
@@ -58,6 +62,29 @@ t_opt	*create_data_struc(int argc, char **argv)
 	return (list);
 }
 
+void	return_res(t_opt *opt)
+{
+	char	*buff;
+	int		i;
+	
+	buff = tgetstr("ve", NULL);
+	if (buff)
+		tputs(buff, 1, &ft_putchar);
+	term_clear();
+	i = 0;
+	while (opt->word)
+	{
+		if (opt->selected)
+		{
+			if (++i != 1)
+				ft_putchar(' ');
+			ft_putstr(opt->word);
+		}
+		++opt;
+	}
+	exit(0);
+}
+
 int		main(int argc, char **argv)
 {
 	t_opt	*opt;
@@ -68,17 +95,20 @@ int		main(int argc, char **argv)
 	if ((ft_err(init_term())))
 	{
 		opt = create_data_struc(--argc, ++argv);
-		term_clear();
-		draw_list(opt);
-		term_home();
 		while (1)
 		{
+			term_clear();
+			draw_list(opt);
+			move_to_opt(opt, pos);
+			underline_one(opt, pos);
 			read(STDIN_FILENO, buff, 3);
 			res = is_arrow(buff);
 			if (res != 0)
 				pos = move_pointer(pos, opt, res);
 			if (buff[0] == ' ')
 				select_one(opt, pos);
+			if (buff[0] == '\n')
+				return_res(opt);
 			ft_bzero(buff, sizeof(char) * 3);
 		}
 	}

@@ -1,11 +1,11 @@
-NAME			=	minishell
+NAME			=	ft_select
 
 # Sources
 SRC				=	srcs/*.c
 
 LIBFT_FOLDER	=	libft
 LIB_FOLDERS		=	-L$(LIBFT_FOLDER)
-LIBS			=	-lft
+LIBS			=	-lft -ltermcap
 # Compilation
 CXX				=	gcc
 CFLAGS			=	#-Wall -Wextra -Werror -O3 ##############################################################
