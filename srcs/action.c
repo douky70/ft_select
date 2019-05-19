@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/17 23:30:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/18 21:50:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,6 @@ void	select_one(t_opt *opt, int pos)
 	ligne = tgetnum("li");
 	cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
 	term_change_clean();
-}
-
-int		opt_len(t_opt *opt)
-{
-	int	res;
-
-	res = 0;
-	while (opt[res].word)
-		++res;
-	return (res);
-}
-
-void	cur_mov(int y, int x)
-{
-	char *buff;
-
-	buff = tgetstr("cm", NULL);
-	tputs(tgoto(buff, x, y), 1, &ft_putchar);
 }
 
 int		move_pointer(int pos, t_opt *opt, int dir)
@@ -89,26 +71,18 @@ int		move_pointer(int pos, t_opt *opt, int dir)
 	{
 		if (pos < ligne)
 		{
+			int tmp;
 			if (pos == 0)
-			{
-				int tmp = ligne - 1;
-				while (tmp + ligne <= optlen)
-					tmp += ligne;
-				pos = tmp;
-			}
+				tmp = ligne - 1;
 			else
-			{
-				int tmp = pos % ligne - 1;
-				while (tmp + ligne <= optlen)
-					tmp += ligne;
-				pos = tmp;
-			}
+				tmp = pos % ligne - 1;
+			while (tmp + ligne <= optlen)
+				tmp += ligne;
+			pos = tmp;
 		}
 		else
 			pos -= ligne;
-		
 		cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
-		
 	}
 	return (pos);
 }

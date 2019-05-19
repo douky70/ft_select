@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/17 23:29:43 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/19 17:21:24 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,41 @@ typedef struct s_opt
 	char			selected;
 }				t_opt;
 
+/*
+**	print.c
+*/
+
+void	draw_list(t_opt *opt);
+int		get_col_opt(t_opt *opt, int ligne, int pos);
+
+/*
+**	term_misc.c
+*/
+
+void	cur_mov(int y, int x);
+
+/*
+**	termcapfonc.c
+*/
 
 void	term_clear(void);
 void	term_home(void);
 void	term_glow(void);
-void	term_put(char *code);
 void	term_change_clean(void);
+
+/*
+**	action.c
+*/
+
 void	select_one(t_opt *opt, int cur);
-
 int		move_pointer(int pos, t_opt *opt, int dir);
-int		get_col_opt(t_opt *opt, int ligne, int pos);
 
-void	cur_mov(int y, int x);
+/*
+**	misc.c
+*/
+
+int		opt_len(t_opt *opt);
+int		ft_err(int err);
+int		is_arrow(char *buff);
+
 #endif

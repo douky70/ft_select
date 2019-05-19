@@ -1,5 +1,8 @@
 {
 	"files.associations": {
-		"libft.h": "c"
+		"libft.h": "c",
+		"term.h": "c",
+		"ft_select.h": "c",
+		"signal.h": "c"
 	}
 }

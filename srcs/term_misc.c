@@ -6,45 +6,19 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:06:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/17 23:30:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/19 16:48:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include "libft.h"
 
-void	term_clear(void)
+void	cur_mov(int y, int x)
 {
 	char *buff;
 
-	buff = tgetstr("cl", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
+	buff = tgetstr("cm", NULL);
+	tputs(tgoto(buff, x, y), 1, &ft_putchar);
 }
 
-void	term_home(void)
-{
-	char *buff;
 
-	buff = tgetstr("ho", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
-}
-
-void	term_glow(void)
-{
-	char *buff;
-
-	buff = tgetstr("mr", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
-}
-
-void	term_change_clean(void)
-{
-	char *buff;
-
-	buff = tgetstr("me", NULL);
-	if (buff)
-		tputs(buff, 1, &ft_putchar);
-}

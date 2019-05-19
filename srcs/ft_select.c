@@ -6,26 +6,18 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/17 23:35:25 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/19 17:22:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 #include "libft.h"
 #include "ft_select.h"
 
-int		ft_err(int err)
-{
-	if (err == 0)
-		ft_putendl("TERM must be set.");
-	else if (err == 0 - 10)
-		ft_putendl("Could not access to the termcap database.");
-	else if (err == -1 - 10)
-		ft_putendl("Terminal type is not defined in termcap database.");
-	return ((err > 0) ? 1 : 0);
-}
+
 
 int		init_term(void)
 {
@@ -64,74 +56,6 @@ t_opt	*create_data_struc(int argc, char **argv)
 		++i;
 	}
 	return (list);
-}
-
-int		is_arrow(char *buff)
-{
-	if (buff[0] == 27 && buff[1] == 91)
-	{
-		if (buff[2] == 65)
-			return (KEY_UP);
-		else if (buff[2] == 66)
-			return (KEY_DOWN);
-		else if (buff[2] == 67)
-			return (KEY_RIGHT);
-		else if (buff[2] == 68)
-			return (KEY_LEFT);
-	}
-	return (0);
-}
-
-int		get_max(int ligne, int i, t_opt *opt)
-{
-	int	start;
-	int	j;
-	int	max;
-	int	len;
-
-	max = 0;
-	j = 0;
-	start = (i - (i % ligne));
-	while (opt[start + j].word && j < 3)
-	{
-		if (max < (len = ft_strlen(opt[start + j].word)))
-			max = len;
-		j++;
-	}
-	return (max);
-}
-
-int		get_col_opt(t_opt *opt, int ligne, int pos)
-{
-	int res;
-	int	i;
-
-	res = 0;
-	i = 0;
-	while (i < pos && opt[i].word)
-	{
-		if ((i % ligne) == (pos % ligne))
-		{
-			res += get_max(ligne, i, opt) + 1;
-		}
-		++i;
-	}
-	return (res);
-}
-
-void	draw_list(t_opt *opt)
-{
-	int 	ligne;
-	int		i;
-
-	i = 0;
-	ligne = tgetnum("li");
-	while (opt[i].word)
-	{
-		cur_mov(i % ligne, get_col_opt(opt, ligne, i));
-		ft_putstr(opt[i].word);
-		++i;
-	}
 }
 
 int		main(int argc, char **argv)
