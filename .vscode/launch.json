@@ -16,7 +16,7 @@
 			"name": "(gdb) FEDORA ATTACH",
 			"type": "cppdbg",
 			"request": "attach",
-			"program": "${workspaceFolder}/a.out",
+			"program": "${workspaceFolder}/ft_select",
 			"processId": "${command:pickProcess}",
 			"MIMode": "gdb",
 			"setupCommands": [

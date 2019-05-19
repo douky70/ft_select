@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 16:10:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/26 16:50:32 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/20 00:18:52 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	signal_pause(void)
 
 void	signal_continue(void)
 {
+	signal(SIGTSTP, &signal_handler);
 	init_term();
 	handler_resize(0);
 }
@@ -59,4 +60,6 @@ void	signal_handler(int signo)
 {
 	if (signo == SIGTSTP)
 		signal_pause();
+	if (signo == SIGCONT)
+		signal_continue();
 }

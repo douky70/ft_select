@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/26 16:28:27 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/20 01:02:36 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ int		main(int argc, char **argv)
 			draw_list(opt);
 			move_to_opt(opt, pos);
 			underline_one(opt, pos);
-			read(STDIN_FILENO, buff, 3);
+			if (isatty(STDIN_FILENO))
+				read(STDIN_FILENO, buff, 3);
 			res = is_arrow(buff);
 			if (res != 0)
 				pos = move_pointer(pos, opt, res);
@@ -123,6 +124,8 @@ int		main(int argc, char **argv)
 				return_res(opt);
 			else if (buff[0] == 27)
 				soft_exit();
+			else if (buff[0] == 8)
+				dprintf(2, "key supr pressed");
 			ft_bzero(buff, sizeof(char) * 3);
 		}
 	}
