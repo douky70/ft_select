@@ -1,7 +1,7 @@
 NAME			=	ft_select
 
 # Sources
-SRC				=	srcs/*.c
+SRC				=	srcs/action.c srcs/ft_select.c srcs/misc.c srcs/print.c srcs/term_misc.c srcs/termcapfonc.c
 
 LIBFT_FOLDER	=	libft
 LIB_FOLDERS		=	-L$(LIBFT_FOLDER)

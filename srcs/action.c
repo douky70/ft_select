@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/18 21:50:23 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/20 17:13:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		move_pointer(int pos, t_opt *opt, int dir)
 	{
 			if (pos > optlen - ligne)
 			{
-				if ((pos + 1) % ligne == 0)
+				if (((pos + 1) % ligne == 0) || (ligne > optlen && pos == optlen))
 					pos = 0;
 				else
 					pos = pos % ligne + 1;
@@ -72,13 +72,18 @@ int		move_pointer(int pos, t_opt *opt, int dir)
 		if (pos < ligne)
 		{
 			int tmp;
-			if (pos == 0)
-				tmp = ligne - 1;
+			if (ligne > optlen && pos == 0)
+				pos = optlen;
 			else
-				tmp = pos % ligne - 1;
-			while (tmp + ligne <= optlen)
-				tmp += ligne;
-			pos = tmp;
+			{
+				if (pos == 0)
+					tmp = ligne - 1;
+				else
+					tmp = pos % ligne - 1;
+				while (tmp + ligne <= optlen)
+					tmp += ligne;
+				pos = tmp;
+			}
 		}
 		else
 			pos -= ligne;

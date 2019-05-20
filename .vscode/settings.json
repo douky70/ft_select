@@ -3,6 +3,7 @@
 		"libft.h": "c",
 		"term.h": "c",
 		"ft_select.h": "c",
-		"signal.h": "c"
+		"signal.h": "c",
+		"ioctl.h": "c"
 	}
 }

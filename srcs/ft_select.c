@@ -6,10 +6,11 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/19 23:00:13 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/20 18:44:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/ioctl.h>
 #include <term.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -85,6 +86,15 @@ void	return_res(t_opt *opt)
 	exit(0);
 }
 
+void handler(int signo)
+{
+	struct winsize sz;
+  	ioctl(0, TIOCGWINSZ, &sz);
+  	dprintf(2, "Screen width: %i  Screen height: %i\n", sz.ws_col, sz.ws_row);
+	int ligne = tgetnum("li");
+	dprintf(2, "LE SIGNAL EST TRIGGER --- Nombre de ligne:%i\n", ligne);
+}
+
 int		main(int argc, char **argv)
 {
 	t_opt	*opt;
@@ -92,9 +102,10 @@ int		main(int argc, char **argv)
 	int		res;
 	int		pos = 0;
 
+	signal(SIGWINCH, handler);
 	if ((ft_err(init_term())))
 	{
-		opt = create_data_struc(--argc, ++argv);
+		opt = create_data_struc(argc, ++argv);
 		while (1)
 		{
 			term_clear();

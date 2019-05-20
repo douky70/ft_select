@@ -5,6 +5,14 @@
 	"version": "0.2.0",
 	"configurations": [
 		{ 
+			"name": "(lldb) Attach MACOS",
+			"type": "cppdbg",
+			"request": "attach",
+			"program": "${workspaceFolder}/ft_select",
+			"processId": "${command:pickProcess}",
+			"MIMode": "lldb"
+		},
+		{ 
 			"name": "(gdb) FEDORA ATTACH",
 			"type": "cppdbg",
 			"request": "attach",
@@ -40,23 +48,12 @@
 		},
 
 		{
-			"name": "(lldb) Launch",
+			"name": "(lldb) Launch MACOS",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/a.out",
-			"args": ["Makefile", "a.out", "a.out.dSYM", "ft_select.h", "libft", "srcs", "test.c"],
-			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}",
-			"environment": [],
-			"externalConsole": true,
-			"MIMode": "lldb"
-		},
-		{
-			"name": "One Arg",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/a.out",
-			"args": ["Makefile"],
+			"program": "${workspaceFolder}/ft_select",
+			"args": ["1", "2", "3"],
+			//"args": ["Makefile", "a.out", "a.out.dSYM", "ft_select.h", "libft", "srcs", "test.c"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],
