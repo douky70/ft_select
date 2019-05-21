@@ -6,18 +6,19 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/20 17:13:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/21 15:00:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
+#include <sys/ioctl.h>
 #include "ft_select.h"
 #include "libft.h"
 
 void	select_one(t_opt *opt, int pos)
 {
-	int	cur;
-	int	ligne;
+	int		cur;
+	struct	winsize sz;
 
 	if (opt[pos].selected == 0)
 	{
@@ -27,23 +28,24 @@ void	select_one(t_opt *opt, int pos)
 	else
 		opt[pos].selected = 0;
 	ft_putstr(opt[pos].word);
-	ligne = tgetnum("li");
-	cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+	ioctl(0, TIOCGWINSZ, &sz);
+	cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
 	term_change_clean();
 }
 
 int		move_pointer(int pos, t_opt *opt, int dir)
 {
-	int ligne = tgetnum("li");
-	int	optlen = opt_len(opt) - 1;
+	struct	winsize	sz;
+	int				optlen = opt_len(opt) - 1;
 	
+	ioctl(0, TIOCGWINSZ, &sz);
 	if (dir == KEY_UP)
 	{
 		if (pos > 0)
 			--pos;
 		else
 			pos = optlen;
-		cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+		cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
 	}
 	if (dir == KEY_DOWN)
 	{
@@ -51,43 +53,43 @@ int		move_pointer(int pos, t_opt *opt, int dir)
 			++pos;
 		else
 			pos = 0;
-		cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+		cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
 		
 	}
 	if (dir == KEY_RIGHT)
 	{
-			if (pos > optlen - ligne)
+			if (pos > optlen - sz.ws_row)
 			{
-				if (((pos + 1) % ligne == 0) || (ligne > optlen && pos == optlen))
+				if (((pos + 1) % sz.ws_row == 0) || (sz.ws_row > optlen && pos == optlen))
 					pos = 0;
 				else
-					pos = pos % ligne + 1;
+					pos = pos % sz.ws_row + 1;
 			}
 			else
-				pos += ligne;
-			cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+				pos += sz.ws_row;
+			cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
 	}
 	if (dir == KEY_LEFT)
 	{
-		if (pos < ligne)
+		if (pos < sz.ws_row)
 		{
 			int tmp;
-			if (ligne > optlen && pos == 0)
+			if (sz.ws_row > optlen && pos == 0)
 				pos = optlen;
 			else
 			{
 				if (pos == 0)
-					tmp = ligne - 1;
+					tmp = sz.ws_row - 1;
 				else
-					tmp = pos % ligne - 1;
-				while (tmp + ligne <= optlen)
-					tmp += ligne;
+					tmp = pos % sz.ws_row - 1;
+				while (tmp + sz.ws_row <= optlen)
+					tmp += sz.ws_row;
 				pos = tmp;
 			}
 		}
 		else
-			pos -= ligne;
-		cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+			pos -= sz.ws_row;
+		cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
 	}
 	return (pos);
 }

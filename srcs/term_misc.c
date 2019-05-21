@@ -6,11 +6,12 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:06:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/19 22:43:33 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/21 15:00:53 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
+#include <sys/ioctl.h>
 #include "ft_select.h"
 #include "libft.h"
 
@@ -24,10 +25,10 @@ void	cur_mov(int y, int x)
 
 void	move_to_opt(t_opt *opt, int pos)
 {
-	int	ligne;
+	struct winsize sz;
 
-	ligne = tgetnum("li");
-	cur_mov(pos % ligne, get_col_opt(opt, ligne, pos));
+  	ioctl(0, TIOCGWINSZ, &sz);
+	cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
 }
 
 void	underline_one(t_opt *opt, int pos)

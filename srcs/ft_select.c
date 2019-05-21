@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/20 18:44:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/21 15:32:52 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,34 @@ void	return_res(t_opt *opt)
 	exit(0);
 }
 
+void	*opt_save(t_opt *new_opt, int *new_pos, int ret)
+{
+	static t_opt	*opt;
+	static int		pos;
+
+	if (new_opt != NULL)
+		pos = *new_pos;
+	if (new_opt != NULL)
+		opt = new_opt;
+	if (ret == 1)
+		return (opt);
+	else if (ret == 2)
+		return (&pos);
+	else
+		return (NULL);
+}
+
 void handler(int signo)
 {
-	struct winsize sz;
-  	ioctl(0, TIOCGWINSZ, &sz);
-  	dprintf(2, "Screen width: %i  Screen height: %i\n", sz.ws_col, sz.ws_row);
-	int ligne = tgetnum("li");
-	dprintf(2, "LE SIGNAL EST TRIGGER --- Nombre de ligne:%i\n", ligne);
+	t_opt	*opt;
+	int		pos;
+
+	opt = opt_save(NULL, NULL, 1);
+	pos = *((int *)opt_save(NULL, NULL, 2));
+	term_clear();
+	draw_list(opt);
+	move_to_opt(opt, pos);
+	underline_one(opt, pos);
 }
 
 int		main(int argc, char **argv)
@@ -108,6 +129,7 @@ int		main(int argc, char **argv)
 		opt = create_data_struc(argc, ++argv);
 		while (1)
 		{
+			opt_save(opt, &pos, 0);
 			term_clear();
 			draw_list(opt);
 			move_to_opt(opt, pos);
@@ -120,6 +142,7 @@ int		main(int argc, char **argv)
 				select_one(opt, pos);
 			if (buff[0] == '\n')
 				return_res(opt);
+			if (buff[0] == 10)
 			ft_bzero(buff, sizeof(char) * 3);
 		}
 	}

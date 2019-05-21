@@ -6,10 +6,11 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:57:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/20 16:04:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/21 15:00:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/ioctl.h>
 #include <term.h>
 #include "libft.h"
 #include "ft_select.h"
@@ -53,14 +54,14 @@ int		get_col_opt(t_opt *opt, int ligne, int pos)
 
 void	draw_list(t_opt *opt)
 {
-	int 	ligne;
+	struct 	winsize sz;
 	int		i;
 
 	i = 0;
-	ligne = tgetnum("li");
+	ioctl(0, TIOCGWINSZ, &sz);
 	while (opt[i].word)
 	{
-		cur_mov(i % ligne, get_col_opt(opt, ligne, i));
+		cur_mov(i % sz.ws_row , get_col_opt(opt, sz.ws_row , i));
 		if (opt[i].selected)
 			term_glow();
 		ft_putstr(opt[i].word);
