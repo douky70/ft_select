@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/21 15:32:52 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/21 18:10:24 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,39 @@
 #include "libft.h"
 #include "ft_select.h"
 
+struct termios	*save_term(void)
+{
+	static			int	i = 0;
+	static struct	termios	save;
+	char	*term;
 
+	if (i == 0)
+	{
+		term = getenv("TERM");
+		if (term == NULL)
+			return (NULL);
+		if (tgetent(NULL, term) < 0)
+			return (NULL);
+		if (tcgetattr(STDIN_FILENO, &save) == -1)
+    		return (NULL);
+		++i;
+	}
+	return (&save);
+}
+
+void	soft_exit(void)
+{
+	struct	termios s_termios;
+	char	*buff;
+
+	s_termios = *save_term();
+	tcsetattr(STDIN_FILENO, 0, &s_termios);
+	buff = tgetstr("ve", NULL);
+	if (buff)
+		tputs(buff, 1, &ft_putchar);
+	term_clear();
+	exit(1);
+}
 
 int		init_term(void)
 {
@@ -26,14 +58,7 @@ int		init_term(void)
 	char	*term;
 	struct	termios s_termios;
 	char	*buff;
-	
-	term = getenv("TERM");
-	if (term == NULL)
-		return (0);
-	if ((ret = tgetent(NULL, term) < 0))
-		return (ret - TERM_INIT);
-	if (tcgetattr(STDIN_FILENO, &s_termios) == -1)
-    	return (-3 - TERM_INIT);
+	s_termios = *save_term();
 	s_termios.c_lflag &= ~(ICANON); /* Met le terminal en mode non canonique. La fonction read recevra les entrées clavier en direct sans attendre qu'on appuie sur Enter */
     s_termios.c_lflag &= ~(ECHO); /* Les touches tapées au clavier ne s'affficheront plus dans le terminal */
 	if (tcsetattr(STDIN_FILENO, 0, &s_termios) == -1)
@@ -88,8 +113,8 @@ void	return_res(t_opt *opt)
 
 void	*opt_save(t_opt *new_opt, int *new_pos, int ret)
 {
-	static t_opt	*opt;
-	static int		pos;
+	static t_opt	*opt = NULL;
+	static int		pos = 0;
 
 	if (new_opt != NULL)
 		pos = *new_pos;
@@ -138,11 +163,12 @@ int		main(int argc, char **argv)
 			res = is_arrow(buff);
 			if (res != 0)
 				pos = move_pointer(pos, opt, res);
-			if (buff[0] == ' ')
+			else if (buff[0] == ' ')
 				select_one(opt, pos);
-			if (buff[0] == '\n')
+			else if (buff[0] == '\n')
 				return_res(opt);
-			if (buff[0] == 10)
+			else if (buff[0] == 27)
+				soft_exit();
 			ft_bzero(buff, sizeof(char) * 3);
 		}
 	}
