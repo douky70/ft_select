@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/23 16:19:43 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/23 20:10:04 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int		main(int argc, char **argv)
 	int		pos = 0;
 
 	signal(SIGWINCH, &handler_resize);
+	signal(SIGINT, &handler_ctrl_c);
+	signal(SIGTSTP, &handler_ctrl_z);
 	if ((ft_err(init_term())))
 	{
 		opt = create_data_struc(argc, ++argv);

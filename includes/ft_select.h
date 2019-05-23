@@ -6,15 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/23 16:12:17 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/23 18:24:45 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SELECT_H
 # define FT_SELECT_H
 # define TERM_INIT 10
-
-
 # define KEY_UP 	1
 # define KEY_DOWN	2
 # define KEY_LEFT	3
@@ -27,6 +25,7 @@ typedef struct	s_opt
 	char			selected;
 }				t_opt;
 
+typedef struct winsize	t_winsize;
 /*
 **	print.c
 */
@@ -67,9 +66,33 @@ int				opt_len(t_opt *opt);
 int				ft_err(int err);
 int				is_arrow(char *buff);
 void			*opt_save(t_opt *new_opt, int *new_pos, int ret);
+
 /*
 **	signaux.c
 */
 
 void			handler_resize(int signo);
+void			handler_ctrl_c(int signo);
+void			handler_ctrl_z(int signo);
+void			handler_continue(int signo);
+
+/*
+**	move.c
+*/
+
+int				move_up(t_opt *opt, int pos);
+int				move_down(t_opt *opt, int pos);
+int				move_right(t_opt *opt, int pos);
+int				move_left(t_opt *opt, int pos);
+
+
+
+
+
+
+
+
+
+int		init_term(void);
+void	soft_exit(void);
 #endif
