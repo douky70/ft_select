@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:57:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/23 15:53:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:20:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int		get_col_opt(t_opt *opt, int ligne, int pos)
 
 void	draw_list(t_opt *opt)
 {
-	struct 	winsize sz;
-	int		i;
+	struct winsize	sz;
+	int				i;
 
 	i = 0;
 	ioctl(0, TIOCGWINSZ, &sz);
 	while (opt[i].word)
 	{
-		cur_mov(i % sz.ws_row , get_col_opt(opt, sz.ws_row , i));
+		cur_mov(i % sz.ws_row, get_col_opt(opt, sz.ws_row, i));
 		if (opt[i].selected)
 			term_glow();
 		ft_putstr(opt[i].word);

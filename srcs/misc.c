@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:06:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/19 16:40:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:12:18 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,21 @@ int		is_arrow(char *buff)
 			return (KEY_LEFT);
 	}
 	return (0);
+}
+
+void	*opt_save(t_opt *new_opt, int *new_pos, int ret)
+{
+	static t_opt	*opt = NULL;
+	static int		pos = 0;
+
+	if (new_opt != NULL)
+		pos = *new_pos;
+	if (new_opt != NULL)
+		opt = new_opt;
+	if (ret == 1)
+		return (opt);
+	else if (ret == 2)
+		return (&pos);
+	else
+		return (NULL);
 }

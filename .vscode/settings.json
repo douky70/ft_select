@@ -4,6 +4,7 @@
 		"term.h": "c",
 		"ft_select.h": "c",
 		"signal.h": "c",
-		"ioctl.h": "c"
+		"ioctl.h": "c",
+		"unistd.h": "c"
 	}
 }

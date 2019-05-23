@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/23 15:46:14 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:19:43 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,10 @@
 #include "libft.h"
 #include "ft_select.h"
 
-struct termios	*save_term(void)
-{
-	static			int	i = 0;
-	static struct	termios	save;
-	char	*term;
-
-	if (i == 0)
-	{
-		term = getenv("TERM");
-		if (term == NULL)
-			return (NULL);
-		if (tgetent(NULL, term) < 0)
-			return (NULL);
-		if (tcgetattr(STDIN_FILENO, &save) == -1)
-    		return (NULL);
-		++i;
-	}
-	return (&save);
-}
-
 void	soft_exit(void)
 {
-	struct	termios s_termios;
-	char	*buff;
+	struct termios	s_termios;
+	char			*buff;
 
 	s_termios = *save_term();
 	tcsetattr(STDIN_FILENO, 0, &s_termios);
@@ -54,15 +34,16 @@ void	soft_exit(void)
 
 int		init_term(void)
 {
-	int		ret;
-	char	*term;
-	struct	termios s_termios;
-	char	*buff;
+	int				ret;
+	char			*term;
+	struct termios	s_termios;
+	char			*buff;
+
 	s_termios = *save_term();
 	s_termios.c_lflag &= ~(ICANON); /* Met le terminal en mode non canonique. La fonction read recevra les entrées clavier en direct sans attendre qu'on appuie sur Enter */
     s_termios.c_lflag &= ~(ECHO); /* Les touches tapées au clavier ne s'affficheront plus dans le terminal */
 	if (tcsetattr(STDIN_FILENO, 0, &s_termios) == -1)
-        return (-4 - TERM_INIT);
+		return (-4 - TERM_INIT);
 	buff = tgetstr("vi", NULL);
 	if (buff)
 		tputs(buff, 1, &ft_putchar);
@@ -92,7 +73,7 @@ void	return_res(t_opt *opt)
 {
 	char	*buff;
 	int		i;
-	
+
 	buff = tgetstr("ve", NULL);
 	if (buff)
 		tputs(buff, 1, &ft_putchar);
@@ -109,36 +90,6 @@ void	return_res(t_opt *opt)
 		++opt;
 	}
 	exit(0);
-}
-
-void	*opt_save(t_opt *new_opt, int *new_pos, int ret)
-{
-	static t_opt	*opt = NULL;
-	static int		pos = 0;
-
-	if (new_opt != NULL)
-		pos = *new_pos;
-	if (new_opt != NULL)
-		opt = new_opt;
-	if (ret == 1)
-		return (opt);
-	else if (ret == 2)
-		return (&pos);
-	else
-		return (NULL);
-}
-
-void handler_resize(int signo)
-{
-	t_opt	*opt;
-	int		pos;
-
-	opt = opt_save(NULL, NULL, 1);
-	pos = *((int *)opt_save(NULL, NULL, 2));
-	term_clear();
-	draw_list(opt);
-	move_to_opt(opt, pos);
-	underline_one(opt, pos);
 }
 
 int		main(int argc, char **argv)
