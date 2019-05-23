@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:57:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/21 15:00:49 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/23 15:53:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		get_max(int ligne, int i, t_opt *opt)
 	max = 0;
 	j = 0;
 	start = (i - (i % ligne));
-	while (opt[start + j].word && j < 3)
+	while (opt[start + j].word && j < ligne)
 	{
 		if (max < (len = ft_strlen(opt[start + j].word)))
 			max = len;

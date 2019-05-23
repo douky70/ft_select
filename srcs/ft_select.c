@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/21 18:10:24 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/23 15:46:14 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	*opt_save(t_opt *new_opt, int *new_pos, int ret)
 		return (NULL);
 }
 
-void handler(int signo)
+void handler_resize(int signo)
 {
 	t_opt	*opt;
 	int		pos;
@@ -148,7 +148,7 @@ int		main(int argc, char **argv)
 	int		res;
 	int		pos = 0;
 
-	signal(SIGWINCH, handler);
+	signal(SIGWINCH, &handler_resize);
 	if ((ft_err(init_term())))
 	{
 		opt = create_data_struc(argc, ++argv);
@@ -174,3 +174,8 @@ int		main(int argc, char **argv)
 	}
 	return (0);
 }
+
+//TODO
+//Supr elem
+//Signaux
+//pas d'affichage taille de la fenetre
