@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/23 18:24:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/26 16:28:48 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ void			*opt_save(t_opt *new_opt, int *new_pos, int ret);
 **	signaux.c
 */
 
+void			signal_handler(int signo);
 void			handler_resize(int signo);
 void			handler_ctrl_c(int signo);
-void			handler_ctrl_z(int signo);
-void			handler_continue(int signo);
+void			signal_pause(void);
+void			signal_continue(void);
 
 /*
 **	move.c
