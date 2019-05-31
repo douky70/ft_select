@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 16:10:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/20 00:18:52 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/31 18:45:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@ void	handler_resize(int signo)
 
 	opt = opt_save(NULL, NULL, 1);
 	pos = *((int *)opt_save(NULL, NULL, 2));
-	term_clear();
-	draw_list(opt);
-	move_to_opt(opt, pos);
-	underline_one(opt, pos);
+	redraw(opt, pos);
 }
 
-void	handler_ctrl_c(int signo)
+void	handler_kill(void)
 {
 	soft_exit();
 }
@@ -62,4 +59,6 @@ void	signal_handler(int signo)
 		signal_pause();
 	if (signo == SIGCONT)
 		signal_continue();
+	if (signo == SIGINT)
+		handler_kill();
 }

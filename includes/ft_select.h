@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/26 16:28:48 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/31 18:45:17 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void			cur_mov(int y, int x);
 void			move_to_opt(t_opt *opt, int pos);
 void			underline_one(t_opt *opt, int pos);
 struct termios	*save_term(void);
+void			redraw(t_opt *opt, int pos);
 /*
 **	termcapfonc.c
 */
@@ -73,7 +74,7 @@ void			*opt_save(t_opt *new_opt, int *new_pos, int ret);
 
 void			signal_handler(int signo);
 void			handler_resize(int signo);
-void			handler_ctrl_c(int signo);
+void			handler_kill(void);
 void			signal_pause(void);
 void			signal_continue(void);
 

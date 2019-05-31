@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/20 01:02:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/31 19:07:56 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,27 @@ void	return_res(t_opt *opt)
 	exit(0);
 }
 
+t_opt	*del_item(t_opt *old_opt, int pos)
+{
+	t_opt	*new_opt;
+	int		old_opt_len;
+	int		i;
+
+	old_opt_len = opt_len(old_opt);
+	new_opt = malloc(sizeof(t_opt) * (old_opt_len));
+	i = 0;
+	while (i < old_opt_len)
+	{
+		if (i == pos)
+			++old_opt;
+		ft_memcpy(&(new_opt[i]), &(old_opt[i]), sizeof(t_opt));
+		++i;
+	}
+	--old_opt;
+	free(old_opt);
+	return (new_opt);
+}
+
 int		main(int argc, char **argv)
 {
 	t_opt	*opt;
@@ -100,21 +121,19 @@ int		main(int argc, char **argv)
 	int		pos = 0;
 
 	signal(SIGWINCH, &handler_resize);
-	signal(SIGINT, &handler_ctrl_c);
+	signal(SIGINT, &signal_handler);
 	signal(SIGTSTP, &signal_handler);
 	signal(SIGCONT, &signal_handler);
 	if ((ft_err(init_term())))
 	{
 		opt = create_data_struc(argc, ++argv);
+		if (opt_len(opt) <= 0)
+					soft_exit();
 		while (1)
 		{
 			opt_save(opt, &pos, 0);
-			term_clear();
-			draw_list(opt);
-			move_to_opt(opt, pos);
-			underline_one(opt, pos);
-			if (isatty(STDIN_FILENO))
-				read(STDIN_FILENO, buff, 3);
+			redraw(opt, pos);
+			read(STDIN_FILENO, buff, 4);
 			res = is_arrow(buff);
 			if (res != 0)
 				pos = move_pointer(pos, opt, res);
@@ -122,10 +141,16 @@ int		main(int argc, char **argv)
 				select_one(opt, pos);
 			else if (buff[0] == '\n')
 				return_res(opt);
+			else if (buff[0] == 127 || (buff[0] == 27 && buff[1] == 91 && buff[2] == 51 && buff[3] == 126))
+			{
+				opt = del_item(opt, pos);
+				if (pos == opt_len(opt))
+					--pos;
+				if (opt_len(opt) <= 0)
+					soft_exit();
+			}
 			else if (buff[0] == 27)
 				soft_exit();
-			else if (buff[0] == 8)
-				dprintf(2, "key supr pressed");
 			ft_bzero(buff, sizeof(char) * 3);
 		}
 	}
@@ -133,6 +158,10 @@ int		main(int argc, char **argv)
 }
 
 //TODO
-//Supr elem
+//ecirire sur /dev/tty pour faire fonctionner les ls `./ft_select`
+//safe mallocs
+//isatty
 //Signaux
 //pas d'affichage taille de la fenetre
+//27 91 51 126
+// termcapt 'ti' ry 'te' (save et restore term) ????

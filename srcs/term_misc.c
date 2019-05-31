@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:06:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/23 17:00:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/31 18:55:29 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,12 @@ struct termios	*save_term(void)
 		++i;
 	}
 	return (&save);
+}
+
+void			redraw(t_opt *opt, int pos)
+{
+	term_clear();
+	draw_list(opt);
+	move_to_opt(opt, pos);
+	underline_one(opt, pos);
 }
