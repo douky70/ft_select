@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/23 17:09:24 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/03 20:49:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,20 @@ void	select_one(t_opt *opt, int pos)
 	int				cur;
 	struct winsize	sz;
 
-	if (opt[pos].selected == 0)
-	{
-		term_glow();
-		opt[pos].selected = 1;
-	}
-	else
-		opt[pos].selected = 0;
-	ft_putstr(opt[pos].word);
 	ioctl(0, TIOCGWINSZ, &sz);
-	cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
-	term_change_clean();
+	if (sz.ws_col > 0 && sz.ws_row > 0)
+	{
+		if (opt[pos].selected == 0)
+		{
+			term_glow();
+			opt[pos].selected = 1;
+		}
+		else
+			opt[pos].selected = 0;
+		ft_putstr(opt[pos].word);
+		cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
+		term_change_clean();
+	}
 }
 
 int		move_pointer(int pos, t_opt *opt, int dir)

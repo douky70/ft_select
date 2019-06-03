@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:06:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/31 18:55:29 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/03 20:49:52 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,47 @@ struct termios	*save_term(void)
 	return (&save);
 }
 
+int				check_err_term_size(t_opt *opt)
+{
+	struct winsize	sz;
+	int				len;
+	int				max;
+	int				tmp;
+	int				i;
+
+	ioctl(0, TIOCGWINSZ, &sz);
+	len = opt_len(opt);
+	i = (len / sz.ws_row) * sz.ws_row;
+	max = 0;
+	while (i < len)
+	{
+		if (max < (tmp = get_col_opt(opt, sz.ws_row, i) + ft_strlen(opt[i].word)))
+			max = tmp;
+		++i;
+	}
+	if (sz.ws_col < max)
+	{
+		term_clear();
+		ft_putstr("Error term size");
+		return (0);
+	}
+	else
+		return (1);
+}
+
 void			redraw(t_opt *opt, int pos)
 {
-	term_clear();
-	draw_list(opt);
-	move_to_opt(opt, pos);
-	underline_one(opt, pos);
+	struct winsize	sz;
+
+	ioctl(0, TIOCGWINSZ, &sz);
+	if (sz.ws_col > 0 && sz.ws_row > 0)
+	{
+		if (check_err_term_size(opt))
+		{
+			term_clear();
+			draw_list(opt);
+			move_to_opt(opt, pos);
+			underline_one(opt, pos);
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/31 19:07:56 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/05/20 01:17:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int		main(int argc, char **argv)
 	int		res;
 	int		pos = 0;
 
+	if (argc == 1)
+		soft_exit();
 	signal(SIGWINCH, &handler_resize);
 	signal(SIGINT, &signal_handler);
 	signal(SIGTSTP, &signal_handler);
