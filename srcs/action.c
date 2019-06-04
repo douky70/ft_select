@@ -6,14 +6,78 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/03 20:49:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/04 23:14:45 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include <sys/ioctl.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "ft_select.h"
 #include "libft.h"
+
+void	soft_exit(void)
+{
+	struct termios	s_termios;
+	char			*buff;
+
+	s_termios = *save_term();
+	tcsetattr(STDOUT_FILENO, 0, &s_termios);
+	buff = tgetstr("ve", NULL);
+	if (buff)
+		tputs(buff, 1, &ft_putchar);
+	term_clear();
+	exit(1);
+}
+
+void	return_res(t_opt *opt)
+{
+	char	*buff;
+	int		i;
+
+	buff = tgetstr("ve", NULL);
+	if (buff)
+		tputs(buff, 1, &ft_putchar);
+	term_clear();
+	i = 0;
+	while (opt->word)
+	{
+		if (opt->selected)
+		{
+			if (++i != 1)
+				ft_putchar(' ');
+			ft_putstr_fd(opt->word, tty_fd());
+		}
+		++opt;
+	}
+	exit(0);
+}
+
+t_opt	*del_item(t_opt *old_opt, int *pos)
+{
+	t_opt	*new_opt;
+	int		old_opt_len;
+	int		i;
+
+	old_opt_len = opt_len(old_opt);
+	if (old_opt_len - 1 == 0)
+		soft_exit();
+	if (!(new_opt = malloc(sizeof(t_opt) * (old_opt_len))))
+		exit(-1);
+	i = 0;
+	while (i < old_opt_len)
+	{
+		if (i == *pos)
+			++old_opt;
+		ft_memcpy(&(new_opt[i]), &(old_opt[i]), sizeof(t_opt));
+		++i;
+	}
+	if (*pos == old_opt_len - 1)
+		--(*pos);
+	free(--old_opt);
+	return (new_opt);
+}
 
 void	select_one(t_opt *opt, int pos)
 {
@@ -30,7 +94,7 @@ void	select_one(t_opt *opt, int pos)
 		}
 		else
 			opt[pos].selected = 0;
-		ft_putstr(opt[pos].word);
+		ft_putstr_fd(opt[pos].word, tty_fd());
 		cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));
 		term_change_clean();
 	}

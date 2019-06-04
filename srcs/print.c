@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:57:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/03 20:49:48 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/04 23:14:47 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	draw_list(t_opt *opt)
 		cur_mov(i % sz.ws_row, get_col_opt(opt, sz.ws_row, i));
 		if (opt[i].selected)
 			term_glow();
-		ft_putstr(opt[i].word);
+		ft_putstr_fd(opt[i].word, tty_fd());
 		if (opt[i].selected)
 			term_change_clean();
 		++i;

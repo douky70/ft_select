@@ -31,7 +31,7 @@
 			"name": "(gdb) FEDORA",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/a.out",
+			"program": "${workspaceFolder}/ft_select",
 			"args": ["Makefile", "a.out", "a.out.dSYM", "ft_select.h", "libft", "srcs", "test.c"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",

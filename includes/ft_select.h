@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/20 03:44:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/04 23:01:09 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void			term_change_clean(void);
 **	action.c
 */
 
+void			return_res(t_opt *opt);
+void			soft_exit(void);
+t_opt			*del_item(t_opt *old_opt, int *pos);
 void			select_one(t_opt *opt, int cur);
 int				move_pointer(int pos, t_opt *opt, int dir);
 
@@ -74,9 +77,9 @@ void			*opt_save(t_opt *new_opt, int *new_pos, int ret);
 
 void			signal_handler(int signo);
 void			handler_resize(int signo);
-void			handler_kill(void);
 void			signal_pause(void);
 void			signal_continue(void);
+void			init_signal(void);
 
 /*
 **	move.c
@@ -87,14 +90,18 @@ int				move_down(t_opt *opt, int pos);
 int				move_right(t_opt *opt, int pos);
 int				move_left(t_opt *opt, int pos);
 
+/*
+**	init.c
+*/
+
+int				init_term(void);
+t_opt			*create_data_struc(int argc, char **argv);
+
+int		tty_fd(void);
 
 
 
 
 
 
-
-
-int		init_term(void);
-void	soft_exit(void);
 #endif

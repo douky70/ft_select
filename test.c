@@ -32,7 +32,7 @@ int              main(int ac, char **av, char **env)
      return (-1);
 	 term.c_lflag &= ~(ICANON); /* Met le terminal en mode non canonique. La fonction read recevra les entrées clavier en direct sans attendre qu'on appuie sur Enter */
     term.c_lflag &= ~(ECHO); /* Les touches tapées au clavier ne s'affficheront plus dans le terminal */
-	tcsetattr(STDIN_FILENO, 0, &term);
+	tcsetattr(STDOUT_FILENO, 0, &term);
   voir_touche();
 return (0);
 }

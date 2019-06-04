@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:06:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/03 20:49:52 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/04 23:14:59 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			underline_one(t_opt *opt, int pos)
 	if (opt[pos].selected == 1)
 		term_glow();
 	term_underline();
-	ft_putstr(opt[pos].word);
+	ft_putstr_fd(opt[pos].word, tty_fd());
 	term_change_clean();
 }
 
@@ -55,7 +55,7 @@ struct termios	*save_term(void)
 			return (NULL);
 		if (tgetent(NULL, term) < 0)
 			return (NULL);
-		if (tcgetattr(STDIN_FILENO, &save) == -1)
+		if (tcgetattr(STDOUT_FILENO, &save) == -1)
 			return (NULL);
 		++i;
 	}
@@ -83,7 +83,7 @@ int				check_err_term_size(t_opt *opt)
 	if (sz.ws_col < max)
 	{
 		term_clear();
-		ft_putstr("Error term size");
+		ft_putstr_fd("Error term size", tty_fd());
 		return (0);
 	}
 	else
