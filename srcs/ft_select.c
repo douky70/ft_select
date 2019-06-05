@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/04 23:01:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/05 20:59:36 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	key_handler(t_opt *opt)
 		else if (buff[0] == 27)
 			soft_exit();
 		ft_bzero(buff, sizeof(char) * 3);
-		}
+	}
 }
 
 int		main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 21:26:10 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/04 23:16:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/05 20:56:38 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int		init_term(void)
 	struct termios	s_termios;
 	char			*buff;
 
-	/*if (!isatty(STDOUT_FILENO))
-		return (-20);*/
+	if (!isatty(STDIN_FILENO))
+		return (-20);
 	s_termios = *save_term();
 	s_termios.c_lflag &= ~(ICANON | ECHO); /* Met le terminal en mode non canonique. La fonction read recevra les entrées clavier en direct sans attendre qu'on appuie sur Enter */
     //s_termios.c_lflag &= ~(ECHO); /* Les touches tapées au clavier ne s'affficheront plus dans le terminal */

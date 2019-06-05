@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/04 23:14:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/05 20:24:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	soft_exit(void)
 	if (buff)
 		tputs(buff, 1, &ft_putchar);
 	term_clear();
+	close(tty_fd());
 	exit(1);
 }
 
@@ -51,6 +52,7 @@ void	return_res(t_opt *opt)
 		}
 		++opt;
 	}
+	close(tty_fd());
 	exit(0);
 }
 
