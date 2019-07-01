@@ -6,15 +6,44 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 21:26:10 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/01 02:07:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/01 21:34:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include <term.h>
 #include "ft_select.h"
 #include "libft.h"
+
+int		ft_putchar_tty(int c)
+{
+	int fd;
+
+	fd = tty_fd();
+	write(fd, &c, 1);
+	return (1);
+}
+
+int		tty_fd(void)
+{
+	static int	fd = -1;
+	char		*tty_name;
+
+	if (fd < 0)
+	{
+		tty_name = ttyname(STDIN_FILENO);
+		if (tty_name)
+		{
+			if ((fd = open(tty_name, O_RDWR | O_NOCTTY )) < 0)
+				return (-1);
+		}
+		else
+			return (-1);
+	}
+	return (fd);
+}
 
 int		init_term(void)
 {

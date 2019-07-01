@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/01 02:23:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/01 23:32:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	return_res(t_opt *opt)
 		if (opt->selected)
 		{
 			if (++i != 1)
-				ft_putchar_fd(' ',  tty_fd());
-			ft_putstr_fd(opt->word, tty_fd());
+				ft_putchar(' ');
+			ft_putstr(opt->word);
 		}
 		++opt;
 	}

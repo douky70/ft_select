@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:06:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/01 00:12:25 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/01 23:58:35 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int				check_err_term_size(t_opt *opt)
 	len = opt_len(opt);
 	i = (len / sz.ws_row) * sz.ws_row;
 	max = 0;
-	while (i < len)
+	while (i <= len)
 	{
-		if (max < (tmp = get_col_opt(opt, sz.ws_row, i) + ft_strlen(opt[i].word)))
+		if (max <= (tmp = get_col_opt(opt, sz.ws_row, i) + ft_strlen(opt[i].word)))
 			max = tmp;
 		++i;
 	}

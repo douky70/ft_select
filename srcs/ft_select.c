@@ -6,46 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/01 02:15:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/01 21:35:08 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/ioctl.h>
-#include <term.h>
-#include <fcntl.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <signal.h>
 #include "libft.h"
 #include "ft_select.h"
-
-int		ft_putchar_tty(int c)
-{
-	int fd;
-
-	fd = tty_fd();
-	write(fd, &c, 1);
-	return (1);
-}
-
-int		tty_fd(void)
-{
-	static int	fd = -1;
-	char		*tty_name;
-
-	if (fd < 0)
-	{
-		tty_name = ttyname(STDIN_FILENO);
-		if (tty_name)
-		{
-			if ((fd = open(tty_name, O_RDWR | O_NOCTTY )) < 0)
-				return (-1);
-		}
-		else
-			return (-1);
-	}
-	return (fd);
-}
 
 void	key_handler(t_opt *opt)
 {
@@ -94,9 +61,7 @@ int		main(int argc, char **argv)
 }
 
 //TODO
-//ecirire sur tty pour faire fonctionner les ls `./ft_select`
 //safe mallocs
-//isatty
 //Signaux
 //pas d'affichage taille de la fenetre
 //27 91 51 126
