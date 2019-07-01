@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 16:10:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/04 21:46:53 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/01 00:12:24 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	signal_pause(void)
 	char			*buff;
 
 	s_termios = *save_term();
-	tcsetattr(STDOUT_FILENO, 0, &s_termios);
+	tcsetattr(STDIN_FILENO, 0, &s_termios);
 	buff = tgetstr("ve", NULL);
 	if (buff)
-		tputs(buff, 1, &ft_putchar);
+		tputs(buff, 1, &ft_putchar_tty);
 	signal(SIGTSTP, SIG_DFL);
 	ioctl(STDOUT_FILENO, TIOCSTI, "\x1A");
 }

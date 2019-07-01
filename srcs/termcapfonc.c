@@ -6,12 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:18:18 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/05/23 16:19:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/30 21:26:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include "libft.h"
+#include "ft_select.h"
 
 void	term_clear(void)
 {
@@ -19,7 +20,7 @@ void	term_clear(void)
 
 	buff = tgetstr("cl", NULL);
 	if (buff)
-		tputs(buff, 1, &ft_putchar);
+		tputs(buff, 1, &ft_putchar_tty);
 }
 
 void	term_home(void)
@@ -28,7 +29,7 @@ void	term_home(void)
 
 	buff = tgetstr("ho", NULL);
 	if (buff)
-		tputs(buff, 1, &ft_putchar);
+		tputs(buff, 1, &ft_putchar_tty);
 }
 
 void	term_glow(void)
@@ -37,7 +38,7 @@ void	term_glow(void)
 
 	buff = tgetstr("mr", NULL);
 	if (buff)
-		tputs(buff, 1, &ft_putchar);
+		tputs(buff, 1, &ft_putchar_tty);
 }
 
 void	term_underline(void)
@@ -46,7 +47,7 @@ void	term_underline(void)
 
 	buff = tgetstr("us", NULL);
 	if (buff)
-		tputs(buff, 1, &ft_putchar);
+		tputs(buff, 1, &ft_putchar_tty);
 }
 
 void	term_change_clean(void)
@@ -55,5 +56,5 @@ void	term_change_clean(void)
 
 	buff = tgetstr("me", NULL);
 	if (buff)
-		tputs(buff, 1, &ft_putchar);
+		tputs(buff, 1, &ft_putchar_tty);
 }

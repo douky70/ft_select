@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:06:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/04 23:14:59 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/01 00:12:25 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			cur_mov(int y, int x)
 	char *buff;
 
 	buff = tgetstr("cm", NULL);
-	tputs(tgoto(buff, x, y), 1, &ft_putchar);
+	tputs(tgoto(buff, x, y), 1, &ft_putchar_tty);
 }
 
 void			move_to_opt(t_opt *opt, int pos)
@@ -55,7 +55,7 @@ struct termios	*save_term(void)
 			return (NULL);
 		if (tgetent(NULL, term) < 0)
 			return (NULL);
-		if (tcgetattr(STDOUT_FILENO, &save) == -1)
+		if (tcgetattr(STDIN_FILENO, &save) == -1)
 			return (NULL);
 		++i;
 	}

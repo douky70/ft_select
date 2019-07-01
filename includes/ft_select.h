@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/04 23:01:09 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/06/30 21:25:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_opt			*create_data_struc(int argc, char **argv);
 int		tty_fd(void);
 
 
-
+int		ft_putchar_tty(int c);
 
 
 

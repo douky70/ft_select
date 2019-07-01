@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/05 20:24:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/01 02:23:04 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	soft_exit(void)
 	char			*buff;
 
 	s_termios = *save_term();
-	tcsetattr(STDOUT_FILENO, 0, &s_termios);
+	tcsetattr(STDIN_FILENO, 0, &s_termios);
 	buff = tgetstr("ve", NULL);
 	if (buff)
-		tputs(buff, 1, &ft_putchar);
+		tputs(buff, 1, &ft_putchar_tty);
 	term_clear();
 	close(tty_fd());
 	exit(1);
@@ -39,7 +39,7 @@ void	return_res(t_opt *opt)
 
 	buff = tgetstr("ve", NULL);
 	if (buff)
-		tputs(buff, 1, &ft_putchar);
+		tputs(buff, 1, &ft_putchar_tty);
 	term_clear();
 	i = 0;
 	while (opt->word)
@@ -47,7 +47,7 @@ void	return_res(t_opt *opt)
 		if (opt->selected)
 		{
 			if (++i != 1)
-				ft_putchar(' ');
+				ft_putchar_fd(' ',  tty_fd());
 			ft_putstr_fd(opt->word, tty_fd());
 		}
 		++opt;

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/05 20:59:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/01 02:15:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 #include "libft.h"
 #include "ft_select.h"
 
+int		ft_putchar_tty(int c)
+{
+	int fd;
+
+	fd = tty_fd();
+	write(fd, &c, 1);
+	return (1);
+}
+
 int		tty_fd(void)
 {
 	static int	fd = -1;
@@ -26,10 +35,10 @@ int		tty_fd(void)
 
 	if (fd < 0)
 	{
-		tty_name = ttyname(STDOUT_FILENO);
+		tty_name = ttyname(STDIN_FILENO);
 		if (tty_name)
 		{
-			if ((fd = open(tty_name, O_WRONLY)) < 0)
+			if ((fd = open(tty_name, O_RDWR | O_NOCTTY )) < 0)
 				return (-1);
 		}
 		else
