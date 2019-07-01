@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 21:26:10 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/01 21:34:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/02 00:30:31 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int		tty_fd(void)
 
 int		init_term(void)
 {
-	int				ret;
-	char			*term;
 	struct termios	s_termios;
 	char			*buff;
 

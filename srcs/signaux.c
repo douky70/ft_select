@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 16:10:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/01 00:12:24 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/02 00:30:58 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handler_resize(int signo)
 	opt = opt_save(NULL, NULL, 1);
 	pos = *((int *)opt_save(NULL, NULL, 2));
 	redraw(opt, pos);
+	(void)signo;
 }
 
 void	signal_pause(void)

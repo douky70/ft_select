@@ -1,15 +1,17 @@
 NAME			=	ft_select
 
 # Sources
-SRC				=	srcs/action.c srcs/ft_select.c srcs/misc.c srcs/print.c srcs/term_misc.c srcs/termcapfonc.c
+SRC				=	srcs/action.c srcs/ft_select.c srcs/init.c \
+					srcs/misc.c srcs/move.c srcs/print.c \
+					srcs/signaux.c srcs/termcapfonc.c srcs/term_misc.c
 
 LIBFT_FOLDER	=	libft
 LIB_FOLDERS		=	-L$(LIBFT_FOLDER)
 LIBS			=	-lft -ltermcap
 # Compilation
 CXX				=	gcc
-CFLAGS			=	#-Wall -Wextra -Werror -O3 ##############################################################
-INCLUDES		=	-I includes -I $(LIBFT_FOLDER)/includes
+CFLAGS			=	-Wall -Wextra -Werror -O3
+INCLUDES		=	-Iincludes -I$(LIBFT_FOLDER)/includes
 
 # Linking
 OBJ				=	$(SRC:.c=.o)
@@ -23,16 +25,13 @@ all: libft $(NAME)
 $(NAME): $(OBJ)
 	@printf "$(GREEN)[cc]$(RESET): done\n"
 	@printf "$(GREEN)[ld]$(RESET): $(NAME)\n"
-	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES) -g
+	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES)
 
 .c.o: $(SRC)
 	@printf "$(GREEN)[cc]$(RESET): $< -> $@\n"
 	@printf "\e[1A"
-	@gcc -c $< -o $@ $(INCLUDES) $(CFLAGS) -g
+	@gcc -c $< -o $@ $(INCLUDES) $(CFLAGS)
 	@printf "\e[0K"
-
-run: all
-	@./$(NAME)
 
 libft:
 	@printf "$(GREEN)[mk]$(RESET): libft all\n";

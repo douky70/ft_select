@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/01 23:32:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/02 00:30:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ t_opt	*del_item(t_opt *old_opt, int *pos)
 
 void	select_one(t_opt *opt, int pos)
 {
-	int				cur;
 	struct winsize	sz;
 
 	ioctl(0, TIOCGWINSZ, &sz);
