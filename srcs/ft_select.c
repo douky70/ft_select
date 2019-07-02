@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/01 21:35:08 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/02 03:53:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,4 @@ int		main(int argc, char **argv)
 
 //TODO
 //safe mallocs
-//Signaux
-//pas d'affichage taille de la fenetre
-//27 91 51 126
 // termcapt 'ti' ry 'te' (save et restore term) ????

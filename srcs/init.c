@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 21:26:10 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/02 00:30:31 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/02 03:52:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,17 @@ int		tty_fd(void)
 
 int		init_term(void)
 {
-	struct termios	s_termios;
+	struct termios	*s_termios;
 	char			*buff;
 
 	if (!isatty(STDIN_FILENO))
 		return (-20);
-	s_termios = *save_term();
-	s_termios.c_lflag &= ~(ICANON | ECHO);
-	if (tcsetattr(STDIN_FILENO, 0, &s_termios) == -1)
-		return (-4 - TERM_INIT);
+	s_termios = save_term();
+	if (s_termios == NULL)
+		return (-21);
+	s_termios->c_lflag &= ~(ICANON | ECHO);
+	if (tcsetattr(STDIN_FILENO, 0, s_termios) == -1)
+		return (-4);
 	buff = tgetstr("vi", NULL);
 	if (buff)
 		tputs(buff, 1, &ft_putchar_tty);

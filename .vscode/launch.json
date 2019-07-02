@@ -35,7 +35,7 @@
 			"args": ["Makefile", "a.out", "a.out.dSYM", "ft_select.h", "libft", "srcs", "test.c"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
-			"environment": [],
+			"environment": [""],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:06:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/04 21:56:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/02 03:53:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,12 @@ int		opt_len(t_opt *opt)
 
 int		ft_err(int err)
 {
-	if (err == 0)
-		ft_putendl("TERM must be set.");
-	else if (err == -10)
-		ft_putendl("Could not access to the termcap database.");
-	else if (err == -11)
-		ft_putendl("Terminal type is not defined in termcap database.");
+	if (err == -21)
+		ft_putendl("Termios error");
 	else if (err == -20)
 		ft_putendl("Not in a terminal");
+	else if (err == -4)
+		ft_putendl("Term modification error");
 	return ((err > 0) ? 1 : 0);
 }
 
