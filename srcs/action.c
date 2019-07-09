@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 06:29:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/02 00:30:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/09 21:44:44 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,3 +113,5 @@ int		move_pointer(int pos, t_opt *opt, int dir)
 		pos = move_left(opt, pos);
 	return (pos);
 }
+
+/*ti - te save undo term */
