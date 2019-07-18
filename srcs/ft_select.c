@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/02 03:53:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:21:04 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	key_handler(t_opt *opt)
 			select_one(opt, pos);
 		else if (buff[0] == '\n')
 			return_res(opt);
-		else if (buff[0] == 127 || (buff[0] == 27 && buff[1] == 91 
+		else if (buff[0] == 127 || (buff[0] == 27 && buff[1] == 91
 				&& buff[2] == 51 && buff[3] == 126))
 			opt = del_item(opt, &pos);
 		else if (buff[0] == 27)
@@ -55,11 +55,7 @@ int		main(int argc, char **argv)
 		opt = create_data_struc(argc, ++argv);
 		if (opt_len(opt) <= 0)
 			soft_exit();
-		key_handler(opt);		
+		key_handler(opt);
 	}
 	return (0);
 }
-
-//TODO
-//safe mallocs
-// termcapt 'ti' ry 'te' (save et restore term) ????

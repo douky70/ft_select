@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 20:41:35 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/30 21:25:49 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:19:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_opt
 }				t_opt;
 
 typedef struct winsize	t_winsize;
+
 /*
 **	print.c
 */
@@ -42,6 +43,8 @@ void			move_to_opt(t_opt *opt, int pos);
 void			underline_one(t_opt *opt, int pos);
 struct termios	*save_term(void);
 void			redraw(t_opt *opt, int pos);
+int				check_err_term_size(t_opt *opt);
+
 /*
 **	termcapfonc.c
 */
@@ -96,12 +99,7 @@ int				move_left(t_opt *opt, int pos);
 
 int				init_term(void);
 t_opt			*create_data_struc(int argc, char **argv);
-
-int		tty_fd(void);
-
-
-int		ft_putchar_tty(int c);
-
-
+int				tty_fd(void);
+int				ft_putchar_tty(int c);
 
 #endif

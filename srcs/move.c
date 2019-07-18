@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 16:39:50 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/06/03 20:49:46 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:20:25 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,27 @@ int		move_right(t_opt *opt, int pos)
 	return (pos);
 }
 
+int		move_left_filler(int optlen, struct winsize sz, int pos)
+{
+	int	tmp;
+
+	if (sz.ws_row > optlen && pos == 0)
+		pos = optlen;
+	else
+	{
+		if (pos == 0)
+			tmp = sz.ws_row - 1;
+		else
+			tmp = pos % sz.ws_row - 1;
+		while (tmp + sz.ws_row <= optlen)
+			tmp += sz.ws_row;
+		pos = tmp;
+	}
+	return (pos);
+}
+
 int		move_left(t_opt *opt, int pos)
 {
-	int				tmp;
 	int				optlen;
 	struct winsize	sz;
 
@@ -85,20 +103,7 @@ int		move_left(t_opt *opt, int pos)
 	{
 		optlen = opt_len(opt) - 1;
 		if (pos < sz.ws_row)
-		{
-			if (sz.ws_row > optlen && pos == 0)
-				pos = optlen;
-			else
-			{
-				if (pos == 0)
-					tmp = sz.ws_row - 1;
-				else
-					tmp = pos % sz.ws_row - 1;
-				while (tmp + sz.ws_row <= optlen)
-					tmp += sz.ws_row;
-				pos = tmp;
-			}
-		}
+			pos = move_left_filler(optlen, sz, pos);
 		else
 			pos -= sz.ws_row;
 		cur_mov(pos % sz.ws_row, get_col_opt(opt, sz.ws_row, pos));

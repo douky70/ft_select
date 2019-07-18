@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 21:26:10 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/09 21:44:18 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:06:20 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		tty_fd(void)
 		tty_name = ttyname(STDIN_FILENO);
 		if (tty_name)
 		{
-			if ((fd = open(tty_name, O_RDWR | O_NOCTTY )) < 0)
+			if ((fd = open(tty_name, O_RDWR | O_NOCTTY)) < 0)
 				return (-1);
 		}
 		else

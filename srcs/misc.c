@@ -6,10 +6,11 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:06:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/02 03:53:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:08:04 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/ioctl.h>
 #include "libft.h"
 #include "ft_select.h"
 
@@ -65,4 +66,21 @@ void	*opt_save(t_opt *new_opt, int *new_pos, int ret)
 		return (&pos);
 	else
 		return (NULL);
+}
+
+void	redraw(t_opt *opt, int pos)
+{
+	struct winsize	sz;
+
+	ioctl(0, TIOCGWINSZ, &sz);
+	if (sz.ws_col > 0 && sz.ws_row > 0)
+	{
+		if (check_err_term_size(opt))
+		{
+			term_clear();
+			draw_list(opt);
+			move_to_opt(opt, pos);
+			underline_one(opt, pos);
+		}
+	}
 }
