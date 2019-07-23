@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 21:06:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/18 18:08:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/23 20:42:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int		ft_err(int err)
 		ft_putendl("Termios error");
 	else if (err == -20)
 		ft_putendl("Not in a terminal");
+	else if (err == -22)
+		ft_putendl("Only xterm-256color supported plz :]");
 	else if (err == -4)
 		ft_putendl("Term modification error");
 	return ((err > 0) ? 1 : 0);

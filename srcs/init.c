@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 21:26:10 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/18 18:06:20 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/23 21:07:12 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ int		init_term(void)
 {
 	struct termios	*s_termios;
 	char			*buff;
+	char			*term;
 
+	term = getenv("TERM");
+	if (!term || ft_strcmp(term, "xterm-256color") != 0)
+		return (-22);
 	if (!isatty(STDIN_FILENO))
 		return (-20);
 	s_termios = save_term();

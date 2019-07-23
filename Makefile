@@ -10,7 +10,7 @@ LIB_FOLDERS		=	-L$(LIBFT_FOLDER)
 LIBS			=	-lft -ltermcap
 # Compilation
 CXX				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -O3
+CFLAGS			=	-Wall -Wextra -Werror #-O3
 INCLUDES		=	-Iincludes -I$(LIBFT_FOLDER)/includes
 
 # Linking

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 16:10:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/18 18:08:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/23 20:37:07 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,18 @@ void	signal_handler(int signo)
 
 void	init_signal(void)
 {
+	int	i;
+
+	i = 0;
 	signal(SIGWINCH, &handler_resize);
 	signal(SIGTSTP, &signal_handler);
 	signal(SIGCONT, &signal_handler);
-	signal(SIGINT, &signal_handler);
-	signal(SIGQUIT, &signal_handler);
-	signal(SIGABRT, signal_handler);
-	signal(SIGSTOP, signal_handler);
-	signal(SIGKILL, signal_handler);
+	while (++i <= 15)
+		signal(i, &signal_handler);
+	signal(24, &signal_handler);
+	signal(25, &signal_handler);
+	signal(26, &signal_handler);
+	signal(27, &signal_handler);
+	signal(30, &signal_handler);
+	signal(31, &signal_handler);
 }

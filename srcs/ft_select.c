@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:16:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/07/18 18:21:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/07/23 21:08:38 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		main(int argc, char **argv)
 	t_opt	*opt;
 
 	if (argc == 1)
-		soft_exit();
+		return (0);
 	init_signal();
 	if ((ft_err(init_term())))
 	{
